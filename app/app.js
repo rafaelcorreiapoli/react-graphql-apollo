@@ -21,9 +21,12 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import useScroll from 'react-router-scroll';
 import LanguageProvider from 'containers/LanguageProvider';
 import configureStore from './store';
+import ApolloClient from 'apollo-client'
+import { ApolloProvider } from 'react-apollo'
 
 // Import i18n messages
 import { translationMessages } from './i18n';
+import client from './apollo'
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
@@ -54,19 +57,21 @@ const rootRoute = {
 
 const render = (translatedMessages) => {
   ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={translatedMessages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
-        />
-      </LanguageProvider>
-    </Provider>,
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <LanguageProvider messages={translatedMessages}>
+          <Router
+            history={history}
+            routes={rootRoute}
+            render={
+              // Scroll to top when going to a new page, imitating default browser
+              // behaviour
+              applyRouterMiddleware(useScroll())
+            }
+          />
+        </LanguageProvider>
+      </Provider>
+    </ApolloProvider>,
     document.getElementById('app')
   );
 };
