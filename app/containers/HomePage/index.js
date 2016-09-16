@@ -15,6 +15,7 @@ import messages from './messages';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import InsertAuthorForm from 'components/InsertAuthorForm'
+
 const MyQuery = gql`query MyQuery
   {
     authors {
@@ -25,14 +26,6 @@ const MyQuery = gql`query MyQuery
   }
 `;
 
-const MyMutation = gql`mutation MyMutation { addTodo(text: "Test 123") }`;
-
-// We then can use `graphql` to pass the query results returned by MyQuery
-// to MyComponent as a prop (and update them as the results change)
-// const MyComponentWithData = graphql(MyQuery)(MyComponent);
-
-// Or, we can bind the execution of MyMutation to a prop
-// const MyComponentWithMutation = graphql(MyMutation)(MyComponent);
 
 @graphql(MyQuery)
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
